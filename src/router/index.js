@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { Categories, Expenses, Login, SignUp, ErrorPage } from '../views';
+import { Categories, Expenses, Login, SignUp, ErrorPage } from '@/views';
 
 const routes = [
   {
