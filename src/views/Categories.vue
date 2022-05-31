@@ -1,7 +1,12 @@
 <template>
-  <h1>Categories view</h1>
+  <TitleVue :title-text="title" @tick="e => msg = e"></TitleVue>
 </template>
 
-<script setup></script>
+<script setup>
+  import TitleVue from '@/components/atoms/Title.vue';
+  import { ref } from 'vue';
+  const title = ref("Categories")
+  let msg = ref('')
+</script>
 
 <style scoped></style>
