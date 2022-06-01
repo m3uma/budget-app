@@ -1,58 +1,40 @@
 <template>
   <nav>
-    <ul>
-      <li>
-        <router-link :to="{ name: 'Categories' }">
-          <img src="@/assets/icons/categories.png" alt="categories">
-          Categories
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'Expenses' }">
-          <img src="@/assets/icons/expanses.png" alt="expences">
-          Expenses
-        </router-link>
-      </li>
-    </ul>
+    <router-link :to="{ name: 'Categories' }">
+      <img src="@/assets/icons/categories.png" alt="categories">
+      Categories
+    </router-link>
+    <router-link :to="{ name: 'Expenses' }">
+      <img src="@/assets/icons/expanses.png" alt="expences">
+      Expenses
+    </router-link>
   </nav>
 </template>
 
 <style scoped lang="scss">
-  nav {
-    display: flex;
-    flex-direction: column;
-    width:90px;
-    margin-top: 210px;
-    > ul {
-      list-style: none;
-      padding: 0;
-      > li {
-        width: 90px;
-        height: 90px;
-        border: 1px solid #E8E8E8;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        >  a {
-          text-decoration: none;
-          color: #64615F;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          img {
-            margin-bottom: 5px;
-          }
-        }
-      }
-    }
-  }
-  
+nav {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 10rem;
+  border-right: solid 1px #ccc;
+}
+
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 1rem;
+
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2b2b2b;
+  text-decoration: none;
+}
+
+img {
+  width: 3rem;
+  margin-bottom: 1rem;
+}
 </style>
