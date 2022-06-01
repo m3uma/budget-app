@@ -1,11 +1,13 @@
 <template>
   <article>
     <DateSelectorVue />
+    <ChartVue />
   </article>
 </template>
 
 <script setup>
-import DateSelectorVue from '../components/atoms/DateSelector.vue';
+import DateSelectorVue from '@/components/atoms/DateSelector.vue';
+import ChartVue from '@/components/Chart.vue'
 </script>
 
 <style scoped>
