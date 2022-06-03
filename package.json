@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "firebase": "^9.8.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15"
   },
