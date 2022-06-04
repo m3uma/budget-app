@@ -16,5 +16,6 @@ h1 {
     font-weight: 600;
     font-size: 48px;
     margin: 0px;
+    text-align: left;
 }
 </style>

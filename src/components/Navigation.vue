@@ -11,12 +11,16 @@
   </nav>
 </template>
 
+<script setup>
+
+</script>
+
 <style scoped lang="scss">
 nav {
   display: flex;
   flex-direction: column;
 
-  padding-top: 10rem;
+  padding-top: 14rem;
   border-right: solid 1px #ccc;
 }
 
@@ -31,6 +35,9 @@ a {
   font-weight: 700;
   color: #2b2b2b;
   text-decoration: none;
+  &.router-link-active {
+    background: #E8E8E8;
+  }
 }
 
 img {

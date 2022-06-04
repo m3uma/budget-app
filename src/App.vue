@@ -1,5 +1,4 @@
 <template>
-  <Header />
   <div class="wrapper">
     <Navigation />
     <router-view />
@@ -9,8 +8,8 @@
 
 <script setup>
 import Navigation from '@/components/Navigation.vue';
-import Header from '@/components/Header.vue';
 import AddButtonVue from '@/components/atoms/AddButton.vue';
+
 </script>
 
 <style>
