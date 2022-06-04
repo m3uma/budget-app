@@ -12,7 +12,7 @@ import AddButtonVue from '@/components/atoms/AddButton.vue';
 
 </script>
 
-<style>
+<style scoped lang="scss">
 body,
 html,
 #app {

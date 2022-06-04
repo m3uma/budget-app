@@ -8,7 +8,7 @@
 
 <script setup>
 import DateSelectorVue from '@/components/atoms/DateSelector.vue';
-import Header from '../components/Header.vue';
+import Header from '@/components/molecules/Header.vue';
 import ChartVue from '@/components/Chart.vue'
 import { ref } from 'vue';
 const title = ref("Categories")

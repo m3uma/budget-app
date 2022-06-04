@@ -10,7 +10,7 @@ const props = defineProps(['titleText'])
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
     position: absolute;
     margin: 0;

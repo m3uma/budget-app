@@ -41,7 +41,30 @@ a {
 }
 
 img {
-  width: 3rem;
+  width: 2.5rem;
   margin-bottom: 1rem;
+}
+@media (max-width: 576px) {
+    nav {
+      flex-direction: row;
+      justify-content: space-around;
+      position: fixed;
+      bottom: 20px;
+      border: none;
+      border-top: solid 1px #ccc;
+      height: 55px;
+      width: 100vw;
+      padding-top: 0;
+    }
+    a {
+      padding: 0.5rem;
+      &.router-link-active {
+        background: none;
+      }
+    }
+    img {
+      width: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
 }
 </style>
