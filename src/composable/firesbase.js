@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword as createUser } from 'firebase/auth';
+import { createUserWithEmailAndPassword as createUser, signInWithEmailAndPassword as loginUser } from 'firebase/auth';
 import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
 import { auth, app } from '@/firebase/config';
 import { setLocalStorage } from '@/utils/expiryLocalStorage';
@@ -13,4 +13,9 @@ async function signUp({ email, password }) {
   setLocalStorage('user', res.user.uid);
 }
 
-export { signUp };
+async function login({ email, password }) {
+  const res = await loginUser(auth, email, password);
+  setLocalStorage('user', res.user.uid);
+}
+
+export { signUp, login };
