@@ -12,6 +12,21 @@
         </div>
       </div>
     </section>
+    <p>Spending summary:</p>
+    <section>
+      <div class="summary">
+        <div v-for="category in categories" :key="category">
+          <svg viewBox="0 0 10 10" :fill="category.color">
+            <circle cx="50%" cy="50%" r="5" />
+          </svg>{{ category.name }}
+          <span>{{ category.value }} zł</span>
+        </div>
+      </div>
+      <button>
+        <img src="@/assets/icons/addCategory.svg" />
+        Add category
+      </button>
+    </section>
   </article>
 </template>
 
@@ -62,6 +77,7 @@ const chartData = ref({
 <style scoped>
 article {
   flex: 1;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -72,24 +88,52 @@ section {
 }
 
 p {
+  align-self: start;
   padding-top: 2rem;
   font-size: 1rem;
   font-weight: 600;
 }
-
 
 svg {
   width: 1.5rem;
   padding-right: 10px;
 }
 
+span {
+  color: red;
+}
+
+img {
+  width: 2rem;
+}
+
 .chart-legend {
   text-align: left;
+}
+
+button {
+  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-self: start;
+  align-items: center;
+  font-size: 1rem;
+  gap: 0.5rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 .chart-legend-item {
   margin-bottom: 0.5rem;
   display: flex;
   flex-direction: row;
+}
+
+.summary {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0rem 2rem;
 }
 </style>
