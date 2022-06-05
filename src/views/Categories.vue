@@ -1,8 +1,15 @@
 <template>
-  <h1>Categories view</h1>
+  <Header :title-text="title" @tick="(e) => (msg = e)" />
+  <article>
+    <DateSelectorVue />
+    <ChartVue />
+  </article>
 </template>
 
 <script setup>
+import DateSelectorVue from '@/components/atoms/DateSelector.vue';
+import Header from '@/components/molecules/Header.vue';
+import ChartVue from '@/components/Chart.vue';
 import { useFirestore } from '@/stores/useFirestore';
 import { addUserCategory, deleteUserCategory } from '@/composable/firesbase';
 import { ref } from '@vue/reactivity';
@@ -10,6 +17,8 @@ import { ref } from '@vue/reactivity';
 const error = ref(null);
 const category = ref(null);
 const isLoading = ref(false);
+const title = ref('Categories');
+let msg = ref('');
 
 const store = useFirestore();
 
@@ -42,4 +51,11 @@ const handleDelete = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+article {
+  margin-top: 105px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+</style>
