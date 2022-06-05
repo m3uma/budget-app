@@ -6,12 +6,14 @@
 
 <script setup>
 import { ref, resolveComponent } from "vue";
+
+const props = defineProps({
+    chartData: Object
+});
+
+const { data } = props.chartData;
 const HighchartsVue = resolveComponent("highcharts");
 const options = ref({
-    chart: {
-        width: 500,
-        height: 500
-    },
     title: {
         verticalAlign: 'middle',
         floating: true,
@@ -39,15 +41,22 @@ const options = ref({
             innerSize: '45%',
             type: 'pie',
             dataLabels: {
+                formatter: function () {
+                    if (this.y === 0) return null;
+
+                    const total = this.series.total,
+                        share = parseInt(this.y / total * 100);
+
+                    return `${share} %`;
+                },
                 color: '#fbfbfb',
                 style: {
                     outline: 'none',
                     fontSize: '24px'
                 },
-                distance: -60,
-                format: '{y} %'
+                distance: -45,
             },
-            data: [10, 20, 30, 12, 10, 10, 10]
+            data: data.map(({ name, value, color }) => ({ name, y: value, color }))
         }
     ]
 });
