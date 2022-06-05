@@ -8,7 +8,7 @@
       <img src="@/assets/icons/expanses.png" alt="expences">
       Expenses
     </router-link>
-    <button @click="handleClick">Logout</button>
+    <button @click="handleClick">Sign out</button>
   </nav>
 </template>
 
@@ -31,6 +31,18 @@ nav {
 
   padding-top: 14rem;
   border-right: solid 1px #ccc;
+  button {
+    margin-top: auto;
+    background: rgba(217, 217, 217, 0.15);
+    border: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 1rem;
+    color: #FF7B02;
+  }
 }
 
 a {
@@ -47,6 +59,7 @@ a {
   &.router-link-active {
     background: #E8E8E8;
   }
+  
 }
 
 img {
@@ -58,12 +71,19 @@ img {
       flex-direction: row;
       justify-content: space-around;
       position: fixed;
-      bottom: 20px;
+      bottom: 0px;
       border: none;
       border-top: solid 1px #ccc;
       height: 55px;
       width: 100%;
-      padding-top: 0;
+      padding: 0 0 1rem;
+      background: #FFFFFF;
+      button {
+        position: fixed;
+        bottom: 72px;
+        width: 100%;
+        background: rgb(243, 243, 243);
+      }
     }
     a {
       padding: 0.5rem;

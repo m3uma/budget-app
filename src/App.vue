@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <Navigation />
+    <!-- <Navigation /> -->
     <router-view />
-    <AddButtonVue />
+    <!-- <AddButtonVue /> -->
   </div>
 </template>
 
