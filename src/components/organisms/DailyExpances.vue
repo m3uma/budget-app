@@ -15,7 +15,7 @@
 div {
     border-top: 1px solid #E8E8E8;
     max-width: 550px;
-    width: 550px;
+    width: 100%;
     text-align: left;
     > .date {
         font-family: 'Roboto';
@@ -25,6 +25,7 @@ div {
         line-height: 19px;
         padding: 0.5rem;
         color: #969696;
+        border: none;
     }
 }
 

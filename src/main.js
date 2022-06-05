@@ -6,7 +6,6 @@ import { Chart } from 'highcharts-vue';
 
 const app = createApp(App)
     .use(router)
+    .use(pinia)
 		.component("highcharts", Chart)
     .mount('#app');
-
-createApp(App).use(router).use(pinia).mount('#app');

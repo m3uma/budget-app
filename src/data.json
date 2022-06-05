@@ -5,5 +5,13 @@
     {"date": "2022-05-02", "expence_name": "Alcohol", "category_name": "Groceries", "value": "222,22"},
     {"date": "2022-05-02", "expence_name": "shoes", "category_name": "Clothing", "value": "180,22"},
     {"date": "2022-05-03", "expence_name": "School", "category_name": "Education", "value": "222,22"},
-    {"date": "2022-05-03", "expence_name": "Cinema", "category_name": "Entertainment", "value": "50,00"}
+    {"date": "2022-05-04", "expence_name": "Food", "category_name": "Groceries", "value": "222,22"},
+    {"date": "2022-05-04", "expence_name": "Food", "category_name": "Groceries", "value": "222,22"},
+    {"date": "2022-05-04", "expence_name": "Food", "category_name": "Groceries", "value": "300,22"},
+    {"date": "2022-05-04", "expence_name": "Food", "category_name": "Groceries", "value": "222,22"},
+    {"date": "2022-05-05", "expence_name": "Food", "category_name": "Groceries", "value": "300,22"},
+    {"date": "2022-05-08", "expence_name": "Alcohol", "category_name": "Groceries", "value": "222,22"},
+    {"date": "2022-05-08", "expence_name": "shoes", "category_name": "Clothing", "value": "180,22"},
+    {"date": "2022-05-09", "expence_name": "School", "category_name": "Education", "value": "222,22"},
+    {"date": "2022-05-10", "expence_name": "Cinema", "category_name": "Entertainment", "value": "50,00"}
 ]

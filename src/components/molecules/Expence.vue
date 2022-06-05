@@ -24,7 +24,8 @@
     font-family: 'Roboto';
     font-style: normal;
     max-width: 350px;
-    margin-left: 150px;
+    width: 100%;
+    margin-left: auto;
     margin-bottom: 0.5rem;
 
     color: #64615F;
