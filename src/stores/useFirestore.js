@@ -1,22 +1,29 @@
 import { defineStore } from 'pinia';
 import { getLocalStorage } from '@/utils/expiryLocalStorage';
 import { getBaseCategories, getUserCategories } from '@/composable/firesbase';
+import dayjs from 'dayjs';
 
 export const useFirestore = defineStore({
   id: 'firestoreStore',
   state: () => ({
     _user: getLocalStorage('user') || null,
+    _date: dayjs(),
     _categories: [],
     _userCategories: [],
   }),
   getters: {
     user: (state) => state._user,
+    date: (state) => state._date,
     categories: (state) => state._userCategories.concat(...state._categories),
   },
   actions: {
     setUser(user) {
       this._user = user;
     },
+    setDate(date) {
+      this._date = date;
+    },
+    // categories
     setCategories(categories) {
       this._categories = categories;
     },
@@ -29,6 +36,7 @@ export const useFirestore = defineStore({
     deleteCategory(category) {
       this._userCategories = this._userCategories.filter((_category) => _category !== category);
     },
+    // expenses
   },
 });
 
