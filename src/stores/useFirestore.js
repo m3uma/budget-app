@@ -1,14 +1,17 @@
 import { defineStore } from 'pinia';
+import { getLocalStorage } from '@/utils/expiryLocalStorage';
 
 export const useFirestore = defineStore({
   id: 'firestoreStore',
   state: () => ({
-    // values
+    _user: getLocalStorage('user') || null,
   }),
   getters: {
-    // get values from state
+    user: (state) => state._user,
   },
   actions: {
-    // modify values
+    setUser(user) {
+      this._user = user;
+    },
   },
 });
