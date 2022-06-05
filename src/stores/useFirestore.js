@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia';
 import { getLocalStorage } from '@/utils/expiryLocalStorage';
-import { getBaseCategories } from '@/composable/firesbase';
+import { getBaseCategories, getUserCategories } from '@/composable/firesbase';
 
 export const useFirestore = defineStore({
   id: 'firestoreStore',
   state: () => ({
     _user: getLocalStorage('user') || null,
     _categories: [],
+    _userCategories: [],
   }),
   getters: {
     user: (state) => state._user,
-    categories: (state) => state._categories,
+    categories: (state) => state._userCategories.concat(...state._categories),
   },
   actions: {
     setUser(user) {
@@ -18,6 +19,15 @@ export const useFirestore = defineStore({
     },
     setCategories(categories) {
       this._categories = categories;
+    },
+    setUserCategories(categories) {
+      this._userCategories = categories;
+    },
+    addCategory(category) {
+      this._userCategories.push(category);
+    },
+    deleteCategory(category) {
+      this._userCategories = this._userCategories.filter((_category) => _category !== category);
     },
   },
 });
@@ -27,4 +37,6 @@ export const updateStore = async () => {
   store.setUser(getLocalStorage('user'));
   const categories = await getBaseCategories(store.user);
   store.setCategories(categories);
+  const userCategories = await getUserCategories(store.user);
+  store.setUserCategories(userCategories);
 };
