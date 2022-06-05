@@ -53,7 +53,7 @@ img {
       border: none;
       border-top: solid 1px #ccc;
       height: 55px;
-      width: 100vw;
+      width: 100%;
       padding-top: 0;
     }
     a {

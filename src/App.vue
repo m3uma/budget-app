@@ -12,15 +12,14 @@ import AddButtonVue from '@/components/atoms/AddButton.vue';
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
 body,
 html,
 #app {
   margin: 0;
-  width: 100%;
-  height: 100%;
-  max-height: 100vh;
-  max-width: 100vw;
+  min-height: 100vh;
+  max-width: 100%;
 }
 
 #app {
