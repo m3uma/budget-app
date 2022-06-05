@@ -1,15 +1,15 @@
 <template>
   <div>
     <i @click="changeDate(-1)" data-direction="left" />
-    <p>{{ MONTHS[store.date.get('month')] }} {{ store.date.get('year') }}</p>
+    <p>{{ MONTHS[date.get('month')] }} {{ date.get('year') }}</p>
     <i @click="changeDate(1)" data-direction="right" />
   </div>
 </template>
 
 <script setup>
 import { useFirestore } from '@/stores/useFirestore';
+import { storeToRefs } from 'pinia';
 import dayjs from 'dayjs';
-const store = useFirestore();
 const MONTHS = [
   'January',
   'February',
@@ -24,9 +24,11 @@ const MONTHS = [
   'November',
   'December',
 ];
+const store = useFirestore();
+const { date } = storeToRefs(store);
 
 const changeDate = (value) => {
-  store.setDate(store.date.add(value, 'month'));
+  store.setDate(date.value.add(value, 'month'));
 };
 </script>
 
