@@ -1,6 +1,9 @@
 import { createUserWithEmailAndPassword as createUser, signInWithEmailAndPassword as loginUser } from 'firebase/auth';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase/config';
+import { onAuthStateChanged } from 'firebase/auth';
+import { updateStore } from '@/stores/useFirestore';
+import { setLocalStorage } from '@/utils/expiryLocalStorage';
 
 // auth functions
 async function signUp({ email, password }) {
@@ -36,5 +39,12 @@ async function getBaseCategories(userId) {
     console.error(error);
   }
 }
+
+// on user change
+onAuthStateChanged(auth, (user) => {
+  const userId = user?.uid || null;
+  setLocalStorage('user', userId);
+  updateStore();
+});
 
 export { signUp, login, logout, getBaseCategories };
