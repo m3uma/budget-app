@@ -22,10 +22,7 @@
           <span>{{ category.value }} zł</span>
         </div>
       </div>
-      <button>
-        <img src="@/assets/icons/addCategory.svg" />
-        Add category
-      </button>
+      <CategoryModalVue />
     </section>
   </article>
 </template>
@@ -34,6 +31,7 @@
 import { ref } from 'vue';
 import DateSelectorVue from '@/components/atoms/DateSelector.vue';
 import ChartVue from '@/components/Chart.vue';
+import CategoryModalVue from '@/components/molecules/CategoryModal.vue';
 
 const categories = [{
   name: 'Groceries',
@@ -103,26 +101,10 @@ span {
   color: red;
 }
 
-img {
-  width: 2rem;
-}
-
 .chart-legend {
   text-align: left;
 }
 
-button {
-  display: inline-block;
-  display: flex;
-  flex-direction: row;
-  align-self: start;
-  align-items: center;
-  font-size: 1rem;
-  gap: 0.5rem;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-}
 
 .chart-legend-item {
   margin-bottom: 0.5rem;
