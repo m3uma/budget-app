@@ -10,7 +10,6 @@
 <script setup>
 import Navigation from '@/components/Navigation.vue';
 import Header from '@/components/Header.vue';
-import AddButtonVue from '@/components/atoms/AddButton.vue';
 import ExpenseModalVue from './components/molecules/ExpenseModal.vue';
 </script>
 
