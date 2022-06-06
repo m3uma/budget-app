@@ -17,6 +17,23 @@ export const useFirestore = defineStore({
     date: (state) => state._date,
     categories: (state) => state._userCategories.concat(...state._categories),
     expenses: (state) => state._expenses,
+    expansesGroupedByCategory: (state) => {
+      const expanses = {};
+      state._categories.forEach((category) => {
+        expanses[category] = state._expenses.filter((expanse) => expanse.category === category);
+      });
+      return expanses;
+    },
+    expansesGroupedByDate: (state) => {
+      const uniqueDates = [...new Set(state._expenses.map(({ date }) => date.get('date')))];
+      let key = state._date;
+      const expanses = {};
+      uniqueDates.forEach((date) => {
+        key.set('date', date);
+        expanses[key.format('DD/MM/YYYY')] = state._expenses.filter((expanse) => expanse.date.get('date') === date);
+      });
+      return expanses;
+    },
   },
   actions: {
     setUser(user) {
@@ -35,8 +52,8 @@ export const useFirestore = defineStore({
       this._userCategories = await getUserCategories();
     },
     // expenses
-    async getExpanses(date = this._date) {
-      if (date.get('month') !== this._date.get('month') && date.get('year') !== this._date.get('year')) return;
+    async getExpanses(date = this.date) {
+      if (date.get('month') !== this.date.get('month') && date.get('year') !== this.date.get('year')) return;
       this._expenses = await getExpansesByDate(date);
     },
   },
