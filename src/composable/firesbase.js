@@ -1,9 +1,22 @@
 import { createUserWithEmailAndPassword as createUser, signInWithEmailAndPassword as loginUser } from 'firebase/auth';
-import { setDoc, updateDoc, arrayUnion, arrayRemove, doc, getDoc } from 'firebase/firestore';
+import {
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 import { auth, db } from '@/firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
-import { updateStore, useFirestore } from '@/stores/useFirestore';
-import { setLocalStorage } from '@/utils/expiryLocalStorage';
+import { useFirestore } from '@/stores/useFirestore';
+import dayjs from 'dayjs';
 
 ///////////////////    AUTH functions    ///////////////////
 async function signUp({ email, password }) {
@@ -21,8 +34,11 @@ async function logout() {
 
 onAuthStateChanged(auth, (user) => {
   const userId = user?.uid || null;
-  setLocalStorage('user', userId);
-  updateStore();
+  const store = useFirestore();
+  store.setUser(userId);
+  store.getCategories();
+  store.getUserCategories();
+  store.getExpanses();
 });
 ///////////////////  END AUTH functions  ///////////////////
 
@@ -38,7 +54,9 @@ async function createInitialDBForUser(userId) {
 }
 
 ////    CATEGORIES    ////
-async function getBaseCategories(userId) {
+async function getBaseCategories() {
+  const store = useFirestore();
+  const userId = store.user;
   if (!userId) return [];
   try {
     const res = await getDoc(doc(db, 'users', userId, 'categories', 'base'));
@@ -54,7 +72,7 @@ async function addUserCategory(category) {
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayUnion(category),
   });
-  store.addCategory(category);
+  store.getUserCategories();
 }
 
 async function deleteUserCategory(category) {
@@ -63,10 +81,12 @@ async function deleteUserCategory(category) {
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayRemove(category),
   });
-  store.deleteCategory(category);
+  store.getUserCategories();
 }
 
-async function getUserCategories(userId) {
+async function getUserCategories() {
+  const store = useFirestore();
+  const userId = store.user;
   if (!userId) return [];
   try {
     const res = await getDoc(doc(db, 'users', userId, 'categories', 'user'));
@@ -76,7 +96,56 @@ async function getUserCategories(userId) {
   }
 }
 ////    END CATEGORIES    ////
+async function addExpense({ title, date, amount, category, description = '' }) {
+  const store = useFirestore();
+  const userId = store.user;
+  const date1 = dayjs(date);
+  try {
+    const docRef = await addDoc(collection(db, 'users', userId, 'expenses'), {
+      year: date1.get('year'),
+      month: date1.get('month'),
+      day: date1.get('date'),
+      title,
+      amount,
+      category,
+      description,
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+async function getExpansesByDate(date) {
+  const store = useFirestore();
+  const userId = store.user;
+  if (!userId) return [];
+  const expanseQuery = query(
+    collection(db, 'users', userId, 'expenses'),
+    where('year', '==', date.get('year')),
+    where('month', '==', date.get('month')),
+    orderBy('day', 'desc')
+  );
+  const snapshot = await getDocs(expanseQuery);
+  return snapshot.docs.map((doc) => {
+    const { title, category, amount, description, day, month, year } = doc.data();
+    const date = dayjs();
+    date.set('date', day);
+    date.set('month', month);
+    date.set('second', year);
+    return { id: doc.id, date, title, category, amount, description };
+  });
+}
 ///////////////////  END DB functions  ///////////////////
 
-export { signUp, login, logout, getBaseCategories, getUserCategories, addUserCategory, deleteUserCategory };
+export {
+  signUp,
+  login,
+  logout,
+  getBaseCategories,
+  getUserCategories,
+  addUserCategory,
+  deleteUserCategory,
+  addExpense,
+  getExpansesByDate,
+};
