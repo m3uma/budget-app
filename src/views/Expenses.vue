@@ -15,7 +15,7 @@
       </select>
     </div>
     <div class="expances-wrapper-full">
-        <DailyExpances :key="expance.expence_name" v-for="expance in data" :expanceName="expance.expence_name" :categoryName="expance.category_name" :price="expance.value + ' zł'" @expanceTick="e => msg = e" :date="expance.date" @dateTick="e => msg = e"/>   
+        <DailyExpances :key="key" v-for="(value, key) in expansesGroupedByDate" :expances="value" :date="key"/>   
     </div>
   </article>
 </template>
@@ -26,6 +26,7 @@
   import DailyExpances from '../components/organisms/DailyExpances.vue';
   import Navigation from '@/components/Navigation.vue';
   import AddButtonVue from '@/components/atoms/AddButton.vue';
+  import { storeToRefs } from 'pinia';
 
   import { useFirestore } from '../stores/useFirestore';
   import { ref } from 'vue';
@@ -36,7 +37,7 @@
   const data = json;
 
   const store = useFirestore()
-  const categories = store.categories
+  const { categories, expansesGroupedByDate } = storeToRefs(store);
 
 </script>
 

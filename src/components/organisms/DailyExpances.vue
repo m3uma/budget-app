@@ -1,15 +1,14 @@
 <template>
     <div>
         <div class="date">{{ date }}</div>
-        <Expence :expanceName="expanceName" :categoryName="categoryName" :price="price" @expanceTick="e => msg = e" />
+        <Expence v-for="expance in expances" :expanceName="expance.title" :categoryName="expance.category" :price="expance.amount + ' zł'" :key="expance.id" />
     </div>
 </template>
 
 <script setup>
     import Expence from '../molecules/Expence.vue';
-    const props = defineProps(['expanceName', 'categoryName', 'price', 'date'])
-    const emit = defineEmits(['dateTick'])
-    emit('dateTick', '')
+    const props = defineProps(['expances', 'date'])
+
 </script>
 <style scoped lang="scss">
 div {

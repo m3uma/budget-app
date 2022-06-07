@@ -29,7 +29,7 @@ export const useFirestore = defineStore({
       let key = state._date;
       const expanses = {};
       uniqueDates.forEach((date) => {
-        key.set('date', date);
+        key = key.set('date', date);
         expanses[key.format('DD/MM/YYYY')] = state._expenses.filter((expanse) => expanse.date.get('date') === date);
       });
       return expanses;

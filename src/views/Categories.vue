@@ -55,16 +55,18 @@ const handleDelete = async () => {
   }
 };
 const handleAddExpense = async () => {
-  const date = dayjs().set('month', 0); //0 January, 11 December
+  const date = dayjs().set('month', 5).set('date', 13); //0 January, 11 December
   await addExpense({
-    title: 'Title',
+    title: 'Sth',
     date,
-    amount: '12.35',
+    amount: '124.35',
     category: 'category',
     description: 'description text',
   });
   store.getExpanses(date);
 };
+
+handleAddExpense()
 </script>
 
 <style scoped>

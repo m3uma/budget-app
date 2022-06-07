@@ -129,10 +129,7 @@ async function getExpansesByDate(date) {
   const snapshot = await getDocs(expanseQuery);
   return snapshot.docs.map((doc) => {
     const { title, category, amount, description, day, month, year } = doc.data();
-    const date = dayjs();
-    date.set('date', day);
-    date.set('month', month);
-    date.set('second', year);
+    const date = dayjs().set('date', day).set('month', month).set('year', year);
     return { id: doc.id, date, title, category, amount, description };
   });
 }
