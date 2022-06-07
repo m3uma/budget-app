@@ -1,6 +1,6 @@
 <template>
   <Navigation />
-  <AddButtonVue />
+  <ExpenseModalVue />
   <Header :title-text="title" @tick="e => msg = e" />
   <article>
     <DateSelectorVue />
@@ -25,7 +25,7 @@
   import DateSelectorVue from '@/components/atoms/DateSelector.vue';
   import DailyExpances from '../components/organisms/DailyExpances.vue';
   import Navigation from '@/components/Navigation.vue';
-  import AddButtonVue from '@/components/atoms/AddButton.vue';
+  import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
   import { storeToRefs } from 'pinia';
 
   import { useFirestore } from '../stores/useFirestore';

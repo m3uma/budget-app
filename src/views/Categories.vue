@@ -1,6 +1,6 @@
 <template>
   <Navigation />
-  <AddButtonVue />
+  <ExpenseModalVue />
   <Header :title-text="title" @tick="e => msg = e" />
   <article>
     <DateSelectorVue />
@@ -33,7 +33,6 @@
 <script setup>
 import { ref } from 'vue';
 import DateSelectorVue from '@/components/atoms/DateSelector.vue';
-import ChartVue from '@/components/Chart.vue';
 import CategoryModalVue from '@/components/molecules/CategoryModal.vue';
 import Navigation from '@/components/Navigation.vue';
 import AddButtonVue from '@/components/atoms/AddButton.vue';
@@ -41,7 +40,7 @@ import Header from '@/components/molecules/Header.vue';
 import ChartVue from '@/components/Chart.vue';
 import { useFirestore } from '@/stores/useFirestore';
 import { addUserCategory, deleteUserCategory, addExpense } from '@/composable/firesbase';
-import { ref } from '@vue/reactivity';
+import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import dayjs from 'dayjs';
 
 const error = ref(null);

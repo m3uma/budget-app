@@ -1,12 +1,10 @@
 <template>
   <div class="wrapper">
     <router-view />
-    <ExpenseModalVue />
   </div>
 </template>
 
 <script setup>
-import ExpenseModalVue from './components/molecules/ExpenseModal.vue';
 </script>
 
 <style lang="scss">
