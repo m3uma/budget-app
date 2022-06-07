@@ -5,8 +5,8 @@
   <article>
     <DateSelectorVue />
     <div class="total">
-        <span>Total amount of expenses</span>
-        <span>986,00 zł</span>
+      <span>Total amount of expenses</span>
+      <span>986,00 zł</span>
     </div>
     <div class="filter">
       <select name="" id="">
@@ -15,10 +15,9 @@
       </select>
     </div>
     <div class="expances-wrapper-full">
-        <DailyExpances :key="expance.expence_name" v-for="expance in data" :expanceName="expance.expence_name" :categoryName="expance.category_name" :price="expance.value + ' zł'" @expanceTick="e => msg = e" :date="expance.date" @dateTick="e => msg = e"/>
+        <DailyExpances :key="expance.expence_name" v-for="expance in data" :expanceName="expance.expence_name" :categoryName="expance.category_name" :price="expance.value + ' zł'" @expanceTick="e => msg = e" :date="expance.date" @dateTick="e => msg = e"/>   
     </div>
   </article>
-
 </template>
 
 <script setup>
@@ -38,6 +37,7 @@
 
   const store = useFirestore()
   const categories = store.categories
+
 </script>
 
 <style scoped lang="scss">
@@ -74,12 +74,12 @@ article {
       font-size: 36px;
       line-height: 42px;
       text-align: center;
-      color: #64615F;
+      color: #64615f;
       &:last-of-type {
         font-weight: 500;
         font-size: 40px;
         line-height: 47px;
-        color: #DD0E0E;
+        color: #dd0e0e;
       }
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <nav>
     <router-link :to="{ name: 'Categories' }">
-      <img src="@/assets/icons/categories.png" alt="categories">
+      <img src="@/assets/icons/categories.png" alt="categories" />
       Categories
     </router-link>
     <router-link :to="{ name: 'Expenses' }">
-      <img src="@/assets/icons/expanses.png" alt="expences">
+      <img src="@/assets/icons/expanses.png" alt="expences" />
       Expenses
     </router-link>
     <button @click="handleClick">Sign out</button>
@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-
 import { useRouter } from 'vue-router';
 import { logout } from '@/composable/firesbase';
 
@@ -57,7 +56,7 @@ a {
   color: #2b2b2b;
   text-decoration: none;
   &.router-link-active {
-    background: #E8E8E8;
+    background: #e8e8e8;
   }
   
 }
@@ -85,15 +84,15 @@ img {
         background: rgb(243, 243, 243);
       }
     }
-    a {
-      padding: 0.5rem;
-      &.router-link-active {
-        background: none;
-      }
+  a {
+    padding: 0.5rem;
+    &.router-link-active {
+      background: none;
     }
-    img {
-      width: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
+  }
+  img {
+    width: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
 }
 </style>

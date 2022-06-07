@@ -8,9 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.11.2",
     "firebase": "^9.8.2",
-    "pinia": "^2.0.14",
     "highcharts-vue": "^1.4.0",
+    "pinia": "^2.0.14",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15"
   },
