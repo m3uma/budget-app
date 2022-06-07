@@ -9,7 +9,7 @@ console.log(addImg);
 
 <template>
   <button
-    @click="open = true"
+    @click="open = !open"
     class="add-expense"
     :style="{ 'background-image': open ? `url(${closeImg})` : `url(${addImg})` }"
   ></button>
@@ -19,7 +19,24 @@ console.log(addImg);
       <p class="header">Add Expense</p>
       <div class="content">
         <p>Title</p>
-        <input placeholder="Type (up to 25 characters)" />
+        <input placeholder="(up to 25 characters)" maxlength="25" />
+        <div class="form-item">
+          <p>Date</p>
+          <input type="date" />
+        </div>
+        <div class="form-item">
+          <p>Price</p>
+          <input type="number" min="1" step="any" />
+        </div>
+        <div class="form-item">
+          <p>Category</p>
+          <select>
+            <option>groceries</option>
+            <option>placeholder</option>
+          </select>
+        </div>
+        <p>Description (optional)</p>
+        <input placeholder="(up to 300 characters)" maxlength="300" />
         <div class="buttons">
           <button class="back" @click="open = false">Close</button>
           <button class="confirm">Add</button>
@@ -30,6 +47,10 @@ console.log(addImg);
 </template>
 
 <style scoped>
+button {
+  cursor: pointer;
+}
+
 .header {
   padding: 0.5rem;
   background-color: #ff7f0a;
@@ -37,6 +58,15 @@ console.log(addImg);
   font-weight: 600;
   margin: 0;
   color: #fbfbfb;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 15rem;
+  gap: 5rem;
 }
 
 input {
@@ -48,9 +78,8 @@ input {
   padding: 0;
   margin: 0 0 1rem 0;
 }
+
 p {
-  padding: 0;
-  margin: 0 0 0.5rem 0;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -107,6 +136,6 @@ p {
 }
 
 .content {
-  padding: 2rem 1rem;
+  padding: 0rem 1rem 2rem 1rem;
 }
 </style>
