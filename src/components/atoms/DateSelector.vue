@@ -47,13 +47,13 @@ p {
 }
 
 i {
-  height: 0.5rem;
-  width: 0.5rem;
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  cursor: pointer;
+    height: 0.5rem;
+    width: 0.5rem;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
 }
 
 i[data-direction='left'] {
