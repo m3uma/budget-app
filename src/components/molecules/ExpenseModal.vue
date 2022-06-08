@@ -9,7 +9,6 @@ import { storeToRefs } from 'pinia';
 const store = useFirestore();
 const { categories } = storeToRefs(store);
 const open = ref(false);
-
 const today = dayjs().format('YYYY-MM-DD');
 const title = ref('');
 const date = ref(today);
@@ -63,7 +62,7 @@ const handleAddExpense = async () => {
         <label for="desc">Description (optional)</label>
         <input placeholder="(up to 300 characters)" maxlength="300" v-model="description" id="desc" />
         <div class="buttons">
-          <button class="back" type="buton" @click="open = false">Close</button>
+          <button class="back" type="button" @click="activeModal = false">Close</button>
           <button class="confirm" type="submit">Add</button>
         </div>
       </div>
