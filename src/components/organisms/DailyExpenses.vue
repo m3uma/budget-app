@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="date">{{ date }}</div>
-    <Expence
-      v-for="expance in expances"
-      :expanceName="expance.title"
-      :categoryName="expance.category"
-      :price="expance.amount + ' zł'"
-      :key="expance.id"
+    <Expense
+      v-for="expense in expenses"
+      :expenseName="expense.title"
+      :categoryName="expense.category"
+      :price="expense.amount + ' zł'"
+      :key="expense.id"
     />
   </div>
 </template>
 
 <script setup>
-import Expence from '../molecules/Expence.vue';
-const props = defineProps(['expances', 'date']);
+import Expense from '@/components/molecules/Expense.vue';
+const props = defineProps(['expenses', 'date']);
 </script>
 <style scoped lang="scss">
 div {

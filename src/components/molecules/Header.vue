@@ -1,13 +1,10 @@
 <template>
   <header>
-    <Title :title-text="titleText" />
+    <h1><slot></slot></h1>
   </header>
 </template>
 
-<script setup>
-import Title from '@/components/atoms/Title.vue';
-const props = defineProps(['titleText']);
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 header {
@@ -23,5 +20,14 @@ header {
   max-width: 100%;
   display: flex;
   align-items: center;
+}
+h1 {
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  margin: 0px;
+  text-align: left;
 }
 </style>

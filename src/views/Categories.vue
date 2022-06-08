@@ -1,7 +1,7 @@
 <template>
   <Navigation />
   <ExpenseModalVue />
-  <Header :title-text="title" />
+  <Header>Categories</Header>
   <article>
     <DateSelectorVue />
     <section>
@@ -48,12 +48,11 @@ import { storeToRefs } from 'pinia';
 const error = ref(null);
 const category = ref(null);
 const isLoading = ref(false);
-const title = ref('Categories');
 
 const store = useFirestore();
-const { categories, expansesGroupedByCategory } = storeToRefs(store);
+const { categories, expensesGroupedByCategory } = storeToRefs(store);
 const getSumOfExpensesInCategory = (categoryName) => {
-  return expansesGroupedByCategory.value[categoryName].reduce((accumulator, currentValue) => {
+  return expensesGroupedByCategory.value[categoryName].reduce((accumulator, currentValue) => {
     return accumulator + currentValue.amount;
   }, 0);
 };

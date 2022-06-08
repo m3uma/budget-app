@@ -1,7 +1,7 @@
 <template>
   <Navigation />
   <ExpenseModalVue />
-  <Header :title-text="title" />
+  <Header>Expenses</Header>
   <article>
     <DateSelectorVue />
     <div class="total">
@@ -16,12 +16,12 @@
         </option>
       </select>
     </div>
-    <div class="expances-wrapper-full">
-      <DailyExpances
+    <div class="expenses-wrapper-full">
+      <DailyExpenses
         @click="activeModal = !activeModal"
         :key="key"
-        v-for="(value, key) in expansesGroupedByDate"
-        :expances="value"
+        v-for="(value, key) in expensesGroupedByDate"
+        :expenses="value"
         :date="key"
       />
     </div>
@@ -32,22 +32,19 @@
 <script setup>
 import Header from '@/components/molecules/Header.vue';
 import DateSelectorVue from '@/components/atoms/DateSelector.vue';
-import DailyExpances from '../components/organisms/DailyExpances.vue';
+import DailyExpenses from '@/components/organisms/DailyExpenses.vue';
 import Navigation from '@/components/Navigation.vue';
 import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import { storeToRefs } from 'pinia';
-import EditExpenseModalVue from '../components/molecules/EditExpenseModal.vue';
+import EditExpenseModalVue from '@/components/molecules/EditExpenseModal.vue';
 
-import { useFirestore } from '../stores/useFirestore';
+import { useFirestore } from '@/stores/useFirestore';
 import { computed, ref } from 'vue';
 
-const title = ref('Expenses');
-
 const activeModal = ref(false);
-const data = json;
 
 const store = useFirestore();
-const { categories, expansesGroupedByDate, expenses } = storeToRefs(store);
+const { categories, expensesGroupedByDate, expenses } = storeToRefs(store);
 const totalValue = computed(() =>
   expenses.value.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)
 );
@@ -96,7 +93,7 @@ article {
       }
     }
   }
-  .expances-wrapper-full {
+  .expenses-wrapper-full {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     grid-column-gap: 20px;
@@ -105,7 +102,7 @@ article {
     padding: 0 20px;
   }
   @media (max-width: 1300px) {
-    .expances-wrapper-full {
+    .expenses-wrapper-full {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
   }

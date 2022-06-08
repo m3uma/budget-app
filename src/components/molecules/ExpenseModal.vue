@@ -25,7 +25,7 @@ const handleAddExpense = async () => {
     category: category.value,
     description: description.value,
   });
-  store.getExpanses(dateObj);
+  store.getExpansesFromDB(dateObj);
   open.value = false;
 };
 </script>
@@ -62,7 +62,7 @@ const handleAddExpense = async () => {
         <label for="desc">Description (optional)</label>
         <input placeholder="(up to 300 characters)" maxlength="300" v-model="description" id="desc" />
         <div class="buttons">
-          <button class="back" type="button" @click="activeModal = false">Close</button>
+          <button class="back" type="button" @click="open = false">Close</button>
           <button class="confirm" type="submit">Add</button>
         </div>
       </div>
