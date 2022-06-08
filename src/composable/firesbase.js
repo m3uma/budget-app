@@ -46,7 +46,15 @@ onAuthStateChanged(auth, (user) => {
 async function createInitialDBForUser(userId) {
   try {
     await setDoc(doc(db, 'users', userId, 'categories', 'base'), {
-      categories: ['groceries', 'entertainment', 'car & transport', 'education', 'clothing', 'finances', 'other'],
+      categories: [
+        { name: 'groceries', color: '#FF9F40' },
+        { name: 'entertainment', color: '#FF6384' },
+        { name: 'car & transport', color: '#4BC0C0' },
+        { name: 'education', color: '#F040FF' },
+        { name: 'clothing', color: '#00C514' },
+        { name: 'finances', color: '#FF4B40' },
+        { name: 'other', color: '#FF4B40' },
+      ],
     });
   } catch (error) {
     console.error(error);

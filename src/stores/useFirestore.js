@@ -20,7 +20,7 @@ export const useFirestore = defineStore({
     expansesGroupedByCategory: (state) => {
       const expanses = {};
       state._categories.forEach((category) => {
-        expanses[category] = state._expenses.filter((expanse) => expanse.category === category);
+        expanses[category.name] = state._expenses.filter((expanse) => expanse.category === category.name);
       });
       return expanses;
     },

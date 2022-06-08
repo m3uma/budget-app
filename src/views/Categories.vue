@@ -1,17 +1,18 @@
 <template>
   <Navigation />
   <ExpenseModalVue />
-  <Header :title-text="title" @tick="e => msg = e" />
+  <Header :title-text="title" @tick="(e) => (msg = e)" />
   <article>
     <DateSelectorVue />
     <section>
-      <ChartVue :chart-data="chartData" />
+      <ChartVue :chart-data="chartData" :key="chartData" />
       <div class="chart-legend">
         <p>Key:</p>
         <div class="chart-legend-item" v-for="category in categories" :key="category">
           <svg viewBox="0 0 10 10" :fill="category.color">
             <circle cx="50%" cy="50%" r="5" />
-          </svg>{{ category.name }}
+          </svg>
+          {{ category.name }}
         </div>
       </div>
     </section>
@@ -20,9 +21,9 @@
       <div class="summary">
         <div v-for="category in categories" :key="category">
           <svg viewBox="0 0 10 10" :fill="category.color">
-            <circle cx="50%" cy="50%" r="5" />
-          </svg>{{ category.name }}
-          <span>{{ category.value }} zł</span>
+            <circle cx="50%" cy="50%" r="5" /></svg
+          >{{ category.name }}
+          <span>{{ getSumOfExpensesInCategory(category.name) }} zł</span>
         </div>
       </div>
       <CategoryModalVue />
@@ -31,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import DateSelectorVue from '@/components/atoms/DateSelector.vue';
 import CategoryModalVue from '@/components/molecules/CategoryModal.vue';
 import Navigation from '@/components/Navigation.vue';
@@ -42,6 +43,7 @@ import { useFirestore } from '@/stores/useFirestore';
 import { addUserCategory, deleteUserCategory, addExpense } from '@/composable/firesbase';
 import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import dayjs from 'dayjs';
+import { storeToRefs } from 'pinia';
 
 const error = ref(null);
 const category = ref(null);
@@ -50,16 +52,18 @@ const title = ref('Categories');
 let msg = ref('');
 
 const store = useFirestore();
+const { categories, expansesGroupedByCategory } = storeToRefs(store);
+const getSumOfExpensesInCategory = (categoryName) => {
+  return expansesGroupedByCategory.value[categoryName].reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.amount;
+  }, 0);
+};
 
 const handleSubmit = async () => {
   error.value = null;
-  if (store.categories.includes(category.value)) {
-    error.value = `${category.value} category already exist`;
-    return;
-  }
   isLoading.value = true;
   try {
-    await addUserCategory(category.value);
+    await addUserCategory({ name: category.value, color: '#121212' });
   } catch (e) {
     error.value = e.message;
   } finally {
@@ -83,51 +87,18 @@ const handleAddExpense = async () => {
   await addExpense({
     title: 'Sth',
     date,
-    amount: '124.35',
-    category: 'category',
+    amount: 124.35,
+    category: 'car & transport',
     description: 'description text',
   });
   store.getExpanses(date);
 };
 
-const categories = [{
-  name: 'Groceries',
-  value: 323.25,
-  color: '#FF9F40'
-}, {
-  name: 'Entertainment',
-  value: 0.00,
-  color: '#FF6384'
-}, {
-  name: 'Car & Transport',
-  value: 173.25,
-  color: '#FFCD56'
-}, {
-  name: 'Education',
-  value: 130.29,
-  color: '#4BC0C0'
-}, {
-  name: 'Clothing',
-  value: 241.25,
-  color: '#F040FF'
-}, {
-  name: 'Finances',
-  value: 101.25,
-  color: '#00C514'
-}, {
-  name: 'Health & Beauty',
-  value: 0.00,
-  color: '#FF4B40'
-}, {
-  name: 'Other',
-  value: 101.25,
-  color: '#FF4B40'
-}];
-
-const chartData = ref({
-  data: categories
-});
-
+const chartData = computed(() => ({
+  data: categories.value.map(({ name, color }) => {
+    return { name, color, value: getSumOfExpensesInCategory(name) };
+  }),
+}));
 </script>
 
 <style scoped>
@@ -163,7 +134,6 @@ span {
 .chart-legend {
   text-align: left;
 }
-
 
 .chart-legend-item {
   margin-bottom: 0.5rem;
