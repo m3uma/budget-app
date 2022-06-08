@@ -8,7 +8,7 @@
       <ChartVue :chart-data="chartData" :key="chartData" />
       <div class="chart-legend">
         <p>Key:</p>
-        <div class="chart-legend-item" v-for="category in categories" :key="category">
+        <div class="chart-legend-item" v-for="category in categories" :key="category.name">
           <svg viewBox="0 0 10 10" :fill="category.color">
             <circle cx="50%" cy="50%" r="5" />
           </svg>
@@ -40,7 +40,7 @@ import AddButtonVue from '@/components/atoms/AddButton.vue';
 import Header from '@/components/molecules/Header.vue';
 import ChartVue from '@/components/Chart.vue';
 import { useFirestore } from '@/stores/useFirestore';
-import { addUserCategory, deleteUserCategory, addExpense } from '@/composable/firesbase';
+import { addUserCategory, deleteUserCategory } from '@/composable/firesbase';
 import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
@@ -81,17 +81,6 @@ const handleDelete = async () => {
   } finally {
     isLoading.value = false;
   }
-};
-const handleAddExpense = async () => {
-  const date = dayjs().set('month', 5).set('date', 13); //0 January, 11 December
-  await addExpense({
-    title: 'Sth',
-    date,
-    amount: 124.35,
-    category: 'car & transport',
-    description: 'description text',
-  });
-  store.getExpanses(date);
 };
 
 const chartData = computed(() => ({
