@@ -1,7 +1,7 @@
 <template>
   <Navigation />
   <ExpenseModalVue />
-  <Header :title-text="title" @tick="(e) => (msg = e)" />
+  <Header :title-text="title" />
   <article>
     <DateSelectorVue />
     <section>
@@ -49,7 +49,6 @@ const error = ref(null);
 const category = ref(null);
 const isLoading = ref(false);
 const title = ref('Categories');
-let msg = ref('');
 
 const store = useFirestore();
 const { categories, expansesGroupedByCategory } = storeToRefs(store);
