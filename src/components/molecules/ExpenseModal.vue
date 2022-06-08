@@ -4,7 +4,6 @@ import addImg from '@/assets/icons/add.png?url';
 import closeImg from '@/assets/icons/close.png?url';
 
 const open = ref(false);
-console.log(addImg);
 </script>
 
 <template>
@@ -38,7 +37,7 @@ console.log(addImg);
         <p>Description (optional)</p>
         <input placeholder="(up to 300 characters)" maxlength="300" />
         <div class="buttons">
-          <button class="back" @click="open = false">Close</button>
+          <button class="back" @click="activeModal = false">Close</button>
           <button class="confirm">Add</button>
         </div>
       </div>

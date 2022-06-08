@@ -15,8 +15,13 @@
       </select>
     </div>
     <div class="expances-wrapper-full">
-        <DailyExpances :key="key" v-for="(value, key) in expansesGroupedByDate" :expances="value" :date="key"/>   
+        <DailyExpances 
+          @click="activeModal = !activeModal"
+          :key="key" v-for="(value, key) in expansesGroupedByDate" 
+          :expances="value" 
+          :date="key"/>   
     </div>
+    <EditExpenseModalVue v-if="activeModal" @close-modal="activeModal = false"/>
   </article>
 </template>
 
@@ -27,6 +32,7 @@
   import Navigation from '@/components/Navigation.vue';
   import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
   import { storeToRefs } from 'pinia';
+  import EditExpenseModalVue from '../components/molecules/EditExpenseModal.vue';
 
   import { useFirestore } from '../stores/useFirestore';
   import { ref } from 'vue';
@@ -34,10 +40,12 @@
 
   const title = ref("Expenses")
   let msg = ref('')
+  const activeModal = ref(false);
   const data = json;
 
   const store = useFirestore()
   const { categories, expansesGroupedByDate } = storeToRefs(store);
+  
 
 </script>
 
