@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { getLocalStorage, setLocalStorage } from '@/utils/expiryLocalStorage';
-import { getBaseCategories, getUserCategories, getExpansesByDate } from '@/composable/firesbase';
+import { getBaseCategories, getUserCategories, getExpensesByDate } from '@/composable/firesbase';
 import dayjs from 'dayjs';
 
 export const useFirestore = defineStore({
@@ -17,14 +17,14 @@ export const useFirestore = defineStore({
     date: (state) => state._date,
     categories: (state) => state._userCategories.concat(...state._categories),
     expenses: (state) => state._expenses,
-    expansesGroupedByCategory: (state) => {
+    expensesGroupedByCategory: (state) => {
       const expanses = {};
       state._categories.forEach((category) => {
-        expanses[category] = state._expenses.filter((expanse) => expanse.category === category);
+        expanses[category.name] = state._expenses.filter((expanse) => expanse.category === category.name);
       });
       return expanses;
     },
-    expansesGroupedByDate: (state) => {
+    expensesGroupedByDate: (state) => {
       const uniqueDates = [...new Set(state._expenses.map(({ date }) => date.get('date')))];
       let key = state._date;
       const expanses = {};
@@ -44,17 +44,15 @@ export const useFirestore = defineStore({
       this._date = date;
       this.getExpanses();
     },
-    // categories
-    async getCategories() {
+    async getCategoriesFromDB() {
       this._categories = await getBaseCategories();
     },
-    async getUserCategories() {
+    async getUserCategoriesFromDB() {
       this._userCategories = await getUserCategories();
     },
-    // expenses
-    async getExpanses(date = this.date) {
+    async getExpensesFromDB(date = this.date) {
       if (date.get('month') !== this.date.get('month') && date.get('year') !== this.date.get('year')) return;
-      this._expenses = await getExpansesByDate(date);
+      this._expenses = await getExpensesByDate(date);
     },
   },
 });

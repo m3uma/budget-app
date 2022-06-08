@@ -40,7 +40,7 @@ nav {
     font-size: 16px;
     line-height: 19px;
     padding: 1rem;
-    color: #FF7B02;
+    color: #ff7b02;
   }
 }
 
@@ -58,7 +58,6 @@ a {
   &.router-link-active {
     background: #e8e8e8;
   }
-  
 }
 
 img {
@@ -66,24 +65,24 @@ img {
   margin-bottom: 1rem;
 }
 @media (max-width: 576px) {
-    nav {
-      flex-direction: row;
-      justify-content: space-around;
+  nav {
+    flex-direction: row;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0px;
+    border: none;
+    border-top: solid 1px #ccc;
+    height: 55px;
+    width: 100%;
+    padding: 0 0 1rem;
+    background: #ffffff;
+    button {
       position: fixed;
-      bottom: 0px;
-      border: none;
-      border-top: solid 1px #ccc;
-      height: 55px;
+      bottom: 72px;
       width: 100%;
-      padding: 0 0 1rem;
-      background: #FFFFFF;
-      button {
-        position: fixed;
-        bottom: 72px;
-        width: 100%;
-        background: rgb(243, 243, 243);
-      }
+      background: rgb(243, 243, 243);
     }
+  }
   a {
     padding: 0.5rem;
     &.router-link-active {

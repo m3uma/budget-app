@@ -1,8 +1,8 @@
 <template>
-  <Header :title-text="title" @tick="e => msg = e" />
+  <Header>Sign up</Header>
   <article>
     <div>
-      <img src="@/assets/icons/person.png" alt="person">
+      <img src="@/assets/icons/person.png" alt="person" />
       <span>Create an account to acces all features</span>
     </div>
     <form @submit.prevent="handleSubmit">
@@ -13,7 +13,13 @@
       <input type="password" name="password" placeholder="Enter your email password" v-model="password" required />
 
       <label for="confirm-password">Confirm password</label>
-      <input type="password" name="confirm-password" placeholder="Enter your email password" v-model="confirmPassword" required />
+      <input
+        type="password"
+        name="confirm-password"
+        placeholder="Enter your email password"
+        v-model="confirmPassword"
+        required
+      />
 
       <button>Sign up</button>
       <div v-if="isLoading">Loading...</div>
@@ -24,7 +30,6 @@
       <router-link :to="{ name: 'Login' }">Sign in here</router-link>
     </div>
   </article>
-  
 </template>
 
 <script setup>
@@ -32,9 +37,6 @@ import { signUp } from '@/composable/firesbase';
 import Header from '@/components/molecules/Header.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-const title = ref("Sign up")
-let msg = ref('')
 
 const router = useRouter();
 
@@ -92,7 +94,7 @@ article {
       line-height: 23px;
       text-align: center;
 
-      color: #64615F;
+      color: #64615f;
     }
   }
   form {
@@ -102,17 +104,17 @@ article {
     flex-direction: column;
     align-items: flex-start;
     font-weight: 500;
-    border-top: 1px solid #E8E8E8;
+    border-top: 1px solid #e8e8e8;
     padding-top: 1.5rem;
     label {
       font-size: 20px;
       line-height: 28px;
-      color: #64615F;
-      padding-top: 0.5rem
+      color: #64615f;
+      padding-top: 0.5rem;
     }
     input {
       border: none;
-      border-bottom: 1px solid #E8E8E8;
+      border-bottom: 1px solid #e8e8e8;
       margin-bottom: 0.5rem;
       font-weight: 400;
       font-size: 15px;
@@ -127,8 +129,8 @@ article {
       padding: 0.6rem 1.5rem;
       letter-spacing: 0.1em;
       border: none;
-      color: #FFFFFF;
-      background: linear-gradient(95.98deg, #FF7F0A 0%, #FF7A00 100%);
+      color: #ffffff;
+      background: linear-gradient(95.98deg, #ff7f0a 0%, #ff7a00 100%);
       border-radius: 8px;
       margin: 0.7rem 0 0 auto;
       text-transform: uppercase;
@@ -149,29 +151,29 @@ article {
       font-weight: 400;
       font-size: 20px;
       line-height: 23px;
-      color: #64615F;
+      color: #64615f;
     }
     a {
       font-weight: 500;
       font-size: 20px;
       line-height: 23px;
       text-decoration: none;
-      color: #FF7B02;
+      color: #ff7b02;
       margin-top: 0.3rem;
     }
   }
 }
 @media (max-width: 576px) {
   article {
-      > div { 
-        img {
-          width: 3rem;
-        }
-        span {
-          font-size: 18px;
-        }
+    > div {
+      img {
+        width: 3rem;
       }
-      form {
+      span {
+        font-size: 18px;
+      }
+    }
+    form {
       max-width: 320px;
       padding: 1.5rem 1rem;
       button {

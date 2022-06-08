@@ -36,9 +36,9 @@ onAuthStateChanged(auth, (user) => {
   const userId = user?.uid || null;
   const store = useFirestore();
   store.setUser(userId);
-  store.getCategories();
-  store.getUserCategories();
-  store.getExpanses();
+  store.getCategoriesFromDB();
+  store.getUserCategoriesFromDB();
+  store.getExpensesFromDB();
 });
 ///////////////////  END AUTH functions  ///////////////////
 
@@ -46,7 +46,15 @@ onAuthStateChanged(auth, (user) => {
 async function createInitialDBForUser(userId) {
   try {
     await setDoc(doc(db, 'users', userId, 'categories', 'base'), {
-      categories: ['groceries', 'entertainment', 'car & transport', 'education', 'clothing', 'finances', 'other'],
+      categories: [
+        { name: 'groceries', color: '#FF9F40' },
+        { name: 'entertainment', color: '#FF6384' },
+        { name: 'car & transport', color: '#4BC0C0' },
+        { name: 'education', color: '#F040FF' },
+        { name: 'clothing', color: '#00C514' },
+        { name: 'finances', color: '#FF4B40' },
+        { name: 'other', color: '#FF4B40' },
+      ],
     });
   } catch (error) {
     console.error(error);
@@ -72,7 +80,7 @@ async function addUserCategory(category) {
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayUnion(category),
   });
-  store.getUserCategories();
+  store.getUserCategoriesFromDB();
 }
 
 async function deleteUserCategory(category) {
@@ -81,7 +89,7 @@ async function deleteUserCategory(category) {
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayRemove(category),
   });
-  store.getUserCategories();
+  store.getUserCategoriesFromDB();
 }
 
 async function getUserCategories() {
@@ -116,17 +124,17 @@ async function addExpense({ title, date, amount, category, description = '' }) {
   }
 }
 
-async function getExpansesByDate(date) {
+async function getExpensesByDate(date) {
   const store = useFirestore();
   const userId = store.user;
   if (!userId) return [];
-  const expanseQuery = query(
+  const expenseQuery = query(
     collection(db, 'users', userId, 'expenses'),
     where('year', '==', date.get('year')),
     where('month', '==', date.get('month')),
     orderBy('day', 'desc')
   );
-  const snapshot = await getDocs(expanseQuery);
+  const snapshot = await getDocs(expenseQuery);
   return snapshot.docs.map((doc) => {
     const { title, category, amount, description, day, month, year } = doc.data();
     const date = dayjs().set('date', day).set('month', month).set('year', year);
@@ -144,5 +152,5 @@ export {
   addUserCategory,
   deleteUserCategory,
   addExpense,
-  getExpansesByDate,
+  getExpensesByDate,
 };

@@ -2,9 +2,32 @@
 import { ref } from 'vue';
 import addImg from '@/assets/icons/add.png?url';
 import closeImg from '@/assets/icons/close.png?url';
-
+import { addExpense } from '@/composable/firesbase';
+import { useFirestore } from '@/stores/useFirestore';
+import dayjs from 'dayjs';
+import { storeToRefs } from 'pinia';
+const store = useFirestore();
+const { categories } = storeToRefs(store);
 const open = ref(false);
-console.log(addImg);
+const today = dayjs().format('YYYY-MM-DD');
+const title = ref('');
+const date = ref(today);
+const amount = ref('');
+const category = ref('other');
+const description = ref('');
+
+const handleAddExpense = async () => {
+  const dateObj = dayjs(date.value);
+  await addExpense({
+    title: title.value,
+    date: dateObj,
+    amount: +amount.value,
+    category: category.value,
+    description: description.value,
+  });
+  store.getExpansesFromDB(dateObj);
+  open.value = false;
+};
 </script>
 
 <template>
@@ -15,34 +38,35 @@ console.log(addImg);
   ></button>
 
   <Teleport to="body">
-    <div v-if="open" class="modal">
+    <form v-if="open" class="modal" @submit.prevent="handleAddExpense">
       <p class="header">Add Expense</p>
       <div class="content">
-        <p>Title</p>
-        <input placeholder="(up to 25 characters)" maxlength="25" />
+        <label for="title">Title</label>
+        <input placeholder="(up to 25 characters)" maxlength="25" v-model="title" id="title" required />
         <div class="form-item">
-          <p>Date</p>
-          <input type="date" />
+          <label for="date">Date</label>
+          <input type="date" v-model="date" :max="today" id="date" />
         </div>
         <div class="form-item">
-          <p>Price</p>
-          <input type="number" min="1" step="any" />
+          <label for="price">Price</label>
+          <input type="number" min="1" step="any" v-model="amount" id="price" required />
         </div>
         <div class="form-item">
-          <p>Category</p>
-          <select>
-            <option>groceries</option>
-            <option>placeholder</option>
+          <label for="category">Category</label>
+          <select v-model="category" id="category">
+            <option v-for="category in categories" :key="category.name" :value="category.name">
+              {{ category.name }}
+            </option>
           </select>
         </div>
-        <p>Description (optional)</p>
-        <input placeholder="(up to 300 characters)" maxlength="300" />
+        <label for="desc">Description (optional)</label>
+        <input placeholder="(up to 300 characters)" maxlength="300" v-model="description" id="desc" />
         <div class="buttons">
-          <button class="back" @click="open = false">Close</button>
-          <button class="confirm">Add</button>
+          <button class="back" type="button" @click="open = false">Close</button>
+          <button class="confirm" type="submit">Add</button>
         </div>
       </div>
-    </div>
+    </form>
   </Teleport>
 </template>
 
@@ -79,8 +103,9 @@ input {
   margin: 0 0 1rem 0;
 }
 
-p {
+label {
   font-size: 1rem;
+  padding: 1.3em 0;
   font-weight: 600;
 }
 
