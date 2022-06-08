@@ -12,7 +12,7 @@ const emit = defineEmits(['close-modal'])
 
     <Teleport to="body">
         <div class="modal">
-            <p class="header">Add Expense</p>
+            <p class="header">{{ editMode ? 'Edit Expense' : 'Expense'}}</p>
             <div class="content">
                 <div class="form-item">
                     <p>Title</p>
