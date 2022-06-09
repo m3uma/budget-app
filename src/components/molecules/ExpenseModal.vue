@@ -25,7 +25,7 @@ const handleAddExpense = async () => {
     category: category.value,
     description: description.value,
   });
-  store.getExpansesFromDB(dateObj);
+  store.getExpensesFromDB(dateObj);
   open.value = false;
 };
 </script>

@@ -18,14 +18,14 @@
     </div>
     <div class="expenses-wrapper-full">
       <DailyExpenses
-        @click="activeModal = !activeModal"
+        @handle-click="handleClick"
         :key="key"
         v-for="(value, key) in expensesGroupedByDate"
         :expenses="value"
         :date="key"
       />
     </div>
-    <EditExpenseModalVue v-if="activeModal" @close-modal="activeModal = false" />
+    <EditExpenseModalVue v-if="activeModal" @close-modal="activeModal = false" :expenseId="expenseId" />
   </article>
 </template>
 
@@ -42,7 +42,11 @@ import { useFirestore } from '@/stores/useFirestore';
 import { computed, ref } from 'vue';
 
 const activeModal = ref(false);
-
+const expenseId = ref(null);
+const handleClick = (id) => {
+  activeModal.value = !activeModal.value;
+  expenseId.value = id;
+};
 const store = useFirestore();
 const { categories, expensesGroupedByDate, expenses } = storeToRefs(store);
 const totalValue = computed(() =>

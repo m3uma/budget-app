@@ -12,6 +12,7 @@ import {
   orderBy,
   where,
   getDocs,
+  deleteDoc,
 } from 'firebase/firestore';
 import { auth, db } from '@/firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -104,6 +105,8 @@ async function getUserCategories() {
   }
 }
 ////    END CATEGORIES    ////
+
+////       EXPENSES      ////
 async function addExpense({ title, date, amount, category, description = '' }) {
   const store = useFirestore();
   const userId = store.user;
@@ -119,6 +122,16 @@ async function addExpense({ title, date, amount, category, description = '' }) {
       description,
     });
     return docRef.id;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function deleteExpense(id) {
+  const store = useFirestore();
+  const userId = store.user;
+  try {
+    await deleteDoc(doc(db, 'users', userId, 'expenses', id));
   } catch (error) {
     console.error(error);
   }
@@ -141,6 +154,26 @@ async function getExpensesByDate(date) {
     return { id: doc.id, date, title, category, amount, description };
   });
 }
+
+async function updateExpense({ id, title, date, amount, category, description = '' }) {
+  const store = useFirestore();
+  const userId = store.user;
+  const date1 = dayjs(date);
+  try {
+    await setDoc(doc(db, 'users', userId, 'expenses', id), {
+      year: date1.get('year'),
+      month: date1.get('month'),
+      day: date1.get('date'),
+      title,
+      amount,
+      category,
+      description,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+////    END EXPENSES    ////
 ///////////////////  END DB functions  ///////////////////
 
 export {
@@ -152,5 +185,7 @@ export {
   addUserCategory,
   deleteUserCategory,
   addExpense,
+  deleteExpense,
+  updateExpense,
   getExpensesByDate,
 };

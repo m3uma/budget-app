@@ -44,6 +44,9 @@ export const useFirestore = defineStore({
       this._date = date;
       this.getExpanses();
     },
+    getExpanseById(id) {
+      return this._expenses.find((expanse) => expanse.id === id);
+    },
     async getCategoriesFromDB() {
       this._categories = await getBaseCategories();
     },
