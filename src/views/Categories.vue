@@ -157,7 +157,6 @@ button:hover {
 @media (max-width: 780px) {
   .summary {
     gap: 0.5rem 0.5rem;
-    margin-bottom: 55px;
   }
   .summary__item {
     gap: 0.5rem;
@@ -166,7 +165,12 @@ button:hover {
     width: 250px;
   }
   .categories {
+<<<<<<< HEAD
     flex-direction: column;
+=======
+    flex-direction:column;
+    margin-bottom: 120px;
+>>>>>>> bm_dev
   }
 }
 @media (max-width: 500px) {

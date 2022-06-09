@@ -36,11 +36,8 @@ const handleAddExpense = async () => {
 </script>
 
 <template>
-  <button
-    @click="open = !open"
-    class="add-expense"
-    :style="{ 'background-image': open ? `url(${closeImg})` : `url(${addImg})` }"
-  ></button>
+  <button @click="open = !open" class="add-expense"
+    :style="{ 'background-image': open ? `url(${closeImg})` : `url(${addImg})` }"></button>
 
   <Teleport to="body">
     <form v-if="open" class="modal" @submit.prevent="handleAddExpense">
@@ -167,5 +164,14 @@ label {
 
 .content {
   padding: 0rem 1rem 2rem 1rem;
+}
+
+@media (max-width: 576px) {
+  .add-expense {
+    position: fixed;
+    left: 50%;
+    bottom: 5px;
+    transform: translateX(-50%);
+  }
 }
 </style>
