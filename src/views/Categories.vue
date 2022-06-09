@@ -41,7 +41,7 @@ import AddButtonVue from '@/components/atoms/AddButton.vue';
 import Header from '@/components/molecules/Header.vue';
 import ChartVue from '@/components/Chart.vue';
 import { useFirestore } from '@/stores/useFirestore';
-import { addCategory, deleteCategory } from '@/composable/firesbase';
+import { deleteCategory } from '@/composable/firesbase';
 import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
@@ -55,18 +55,6 @@ const getSumOfExpensesInCategory = (categoryName) => {
   return expensesGroupedByCategory.value[categoryName].reduce((accumulator, currentValue) => {
     return accumulator + currentValue.amount;
   }, 0);
-};
-
-const handleSubmit = async () => {
-  error.value = null;
-  isLoading.value = true;
-  try {
-    await addCategory({ name: selectedCategory.value, color: '#121212' });
-  } catch (e) {
-    error.value = e.message;
-  } finally {
-    isLoading.value = false;
-  }
 };
 
 const handleDelete = async (category) => {
@@ -111,7 +99,6 @@ p {
 
 svg {
   width: 1.5rem;
-  padding-right: 10px;
 }
 
 span {
@@ -126,7 +113,9 @@ span {
 .chart-legend-item {
   margin-bottom: 0.5rem;
   display: flex;
-  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+
 }
 
 .summary {
