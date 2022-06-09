@@ -41,7 +41,7 @@ export const useFirestore = defineStore({
       this._categories = await getCategories();
     },
     async getExpensesFromDB(date = this.date) {
-      if (date.get('month') !== this.date.get('month') && date.get('year') !== this.date.get('year')) return;
+      if (date.get('month') !== this.date.get('month') || date.get('year') !== this.date.get('year')) return;
       this._expenses = await getExpensesByDate(date);
     },
   },
