@@ -5,7 +5,7 @@
   <article>
     <DateSelectorVue />
     <section>
-      <ChartVue :chart-data="chartData" :key="chartData" />
+      <ChartVue :chart-data="chartData" :key="chartData" class="chart" />
       <div class="chart-legend">
         <p>Key:</p>
         <div class="chart-legend-item" v-for="category in categories" :key="category.name">
@@ -17,7 +17,7 @@
       </div>
     </section>
     <p>Spending summary:</p>
-    <section>
+    <section class="categories">
       <div class="summary">
         <div v-for="category in categories" :key="category" class="summary__item">
           <button @click="handleDelete(category)">del</button>
@@ -107,6 +107,7 @@ span {
 }
 
 .chart-legend {
+  margin-left: 2rem;
   text-align: left;
 }
 
@@ -143,5 +144,54 @@ button{
 button:hover{
   color: white;
   background: #ff7f0a;
+}
+.chart {
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .chart {
+    width: 350px;
+  }
+}
+@media (max-width: 780px) {
+  .summary {
+    gap: 0.5rem 0.5rem;
+    margin-bottom: 55px;
+  }
+  .summary__item{
+    gap: 0.5rem;
+  }
+  .chart {
+    width: 250px;
+  }
+  .categories {
+    flex-direction:column
+  }
+}
+@media (max-width: 500px) {
+  .summary {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .chart-legend {
+    width: 100%;
+    margin-left: 0.5rem;
+    text-align: left;
+    font-size: 14px;
+  }
+  svg {
+    width: 0.5rem;
+  }
+  .chart-legend-item {
+    gap: 0.5rem;
+  }
+  .chart {
+    width: 200px;
+  }
 }
 </style>

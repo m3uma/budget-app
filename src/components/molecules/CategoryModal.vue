@@ -40,6 +40,7 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
+
 img {
   width: 2rem;
 }
@@ -122,5 +123,12 @@ input {
   width: 100%;
   padding: 0;
   margin: 0 0 1rem 0;
+}
+
+@media (max-width: 780px) {
+  button {
+    margin-left: 0rem;
+    margin-top: 0.5rem;
+  }
 }
 </style>

@@ -39,7 +39,7 @@ const options = ref({
   },
   series: [
     {
-      innerSize: '45%',
+      innerSize: '50%',
       type: 'pie',
       dataLabels: {
         formatter: function () {
@@ -48,7 +48,7 @@ const options = ref({
           const total = this.series.total,
             share = parseInt((this.y / total) * 100);
 
-          return `${share} %`;
+          return `${share}%`;
         },
         color: '#fbfbfb',
         style: {
@@ -60,7 +60,76 @@ const options = ref({
       data: data.map(({ name, value, color }) => ({ name, y: value, color })),
     },
   ],
+  responsive: {
+    rules: [{
+      condition: {
+        maxWidth: 350,
+      },
+      chartOptions: {
+        title: {
+          style: {
+            fontSize: '16px'
+          }
+        },
+        subtitle: {
+          style: {
+            fontSize: '20px'
+          }
+        },
+        series: [{
+          innerSize: '60%',
+          dataLabels: {
+            distance: -30,
+            style: {
+              fontSize: '16px'
+            }
+          }
+        }]
+      }
+    }, {
+      condition: {
+        maxWidth: 250
+      },
+      chartOptions: {
+        chart: {
+          spacing: [30, 0, 0, 0],
+          height: 300
+        },
+        title: {
+          y: -5,
+          style: {
+            fontSize: '14px'
+          }
+        },
+        subtitle: {
+          y: 20,
+          style: {
+            fontSize: '14px'
+          }
+        },
+        series: [{
+          innerSize: '60%',
+          dataLabels: {
+            distance: -20,
+            style: {
+              fontSize: '14px'
+            }
+          }
+        }]
+      }
+    }, {
+      condition: {
+        maxWidth: 200
+      },
+      chartOptions: {
+        chart: {
+          width: 200
+        }
+      }
+    }]
+  }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
