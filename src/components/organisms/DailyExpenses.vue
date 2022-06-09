@@ -5,7 +5,7 @@
       v-for="expense in expenses"
       :expenseName="expense.title"
       :categoryName="expense.category"
-      :price="expense.amount + ' zł'"
+      :price="expense.amount"
       :key="expense.id"
       @click="$emit('handleClick', expense.id)"
     />
@@ -23,14 +23,10 @@ div {
   width: 100%;
   text-align: left;
   > .date {
-    font-family: 'Roboto';
-    font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 1rem;
     padding: 0.5rem 0;
     color: #969696;
-    border: none;
   }
 }
 </style>
