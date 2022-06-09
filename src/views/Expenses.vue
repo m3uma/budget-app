@@ -9,9 +9,9 @@
       <span>{{ totalValue.toFixed(2) }} zł</span>
     </div>
     <div class="filter">
-      <select>
-        <option selected value="all">all categories</option>
-        <option :key="category.name" v-for="category in categories" value="{{ category.name }}">
+      <select @change="handleFilterChange" v-model="selectedFilter">
+        <option value="/">all categories</option>
+        <option :key="category.name" v-for="category in categories" :value="category.name">
           {{ category.name }}
         </option>
       </select>
@@ -40,18 +40,45 @@ import EditExpenseModalVue from '@/components/molecules/EditExpenseModal.vue';
 
 import { useFirestore } from '@/stores/useFirestore';
 import { computed, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
+const store = useFirestore();
+const { categories, expenses, date } = storeToRefs(store);
 
 const activeModal = ref(false);
 const expenseId = ref(null);
+const selectedFilter = ref(route.params.category || '/');
+const filteredExpenses = computed(() => {
+  if (selectedFilter.value === '/') return expenses.value;
+  return expenses.value.filter((expense) => expense.category === selectedFilter.value);
+});
+
+const totalValue = computed(() =>
+  filteredExpenses.value.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)
+);
+const expensesGroupedByDate = computed(() => {
+  const uniqueDates = [...new Set(filteredExpenses.value.map(({ date }) => date.get('date')))];
+  let key = date.value;
+  const res = {};
+  uniqueDates.forEach((d) => {
+    key = key.set('date', d);
+    res[key.format('DD/MM/YYYY')] = filteredExpenses.value.filter(
+      (expense) =>
+        expense.date.get('date') === d && categories.value.some((category) => category.name === expense.category)
+    );
+  });
+  return res;
+});
+
 const handleClick = (id) => {
   activeModal.value = !activeModal.value;
   expenseId.value = id;
 };
-const store = useFirestore();
-const { categories, expensesGroupedByDate, expenses } = storeToRefs(store);
-const totalValue = computed(() =>
-  expenses.value.reduce((accumulator, currentValue) => accumulator + currentValue.amount, 0)
-);
+const handleFilterChange = (e) => {
+  router.push({ name: 'Expenses', params: { category: e.target.value } });
+};
 </script>
 
 <style scoped lang="scss">

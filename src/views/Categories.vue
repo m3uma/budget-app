@@ -24,7 +24,7 @@
           <svg viewBox="0 0 10 10" :fill="category.color">
             <circle cx="50%" cy="50%" r="5" /></svg
           >{{ category.name }}
-          <span>{{ getSumOfExpensesInCategory(category.name) }} zł</span>
+          <span>{{ getSumOfExpensesInCategory(category.name).toFixed(2) }} zł</span>
         </div>
       </div>
       <CategoryModalVue />
@@ -102,7 +102,7 @@ svg {
 }
 
 span {
-  color: red;
+  color: #dd0e0e;
   margin-left: auto;
 }
 

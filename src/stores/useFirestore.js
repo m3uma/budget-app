@@ -15,21 +15,12 @@ export const useFirestore = defineStore({
     user: (state) => state._user,
     date: (state) => state._date,
     categories: (state) => state._categories,
-    expenses: (state) => state._expenses,
+    expenses: (state) =>
+      state._expenses.filter((expense) => state._categories.some((category) => category.name === expense.category)),
     expensesGroupedByCategory: (state) => {
       const expanses = {};
       state._categories.forEach((category) => {
         expanses[category.name] = state._expenses.filter((expanse) => expanse.category === category.name);
-      });
-      return expanses;
-    },
-    expensesGroupedByDate: (state) => {
-      const uniqueDates = [...new Set(state._expenses.map(({ date }) => date.get('date')))];
-      let key = state._date;
-      const expanses = {};
-      uniqueDates.forEach((date) => {
-        key = key.set('date', date);
-        expanses[key.format('DD/MM/YYYY')] = state._expenses.filter((expanse) => expanse.date.get('date') === date);
       });
       return expanses;
     },

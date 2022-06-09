@@ -5,7 +5,7 @@
       <span>{{ categoryName }}</span>
     </div>
     <div>
-      <span>{{ price }}</span>
+      <span>{{ price.toFixed(2) }} zł</span>
     </div>
   </div>
 </template>
@@ -16,14 +16,13 @@ const props = defineProps(['expenseName', 'categoryName', 'price']);
 <style scoped lang="scss">
 .expense-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   border-bottom: 1px solid #e8e8e8;
   border-top: none;
   font-family: 'Roboto';
   font-style: normal;
   max-width: 350px;
   width: 100%;
-  margin-left: auto;
   margin-bottom: 0.5rem;
 
   color: #64615f;
@@ -33,6 +32,7 @@ const props = defineProps(['expenseName', 'categoryName', 'price']);
     align-items: flex-start;
     justify-content: center;
     padding: 0.5rem;
+    margin-left: 2em;
     &:first-of-type > span {
       font-weight: 600;
       font-size: 20px;
