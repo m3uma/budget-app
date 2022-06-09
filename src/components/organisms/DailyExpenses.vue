@@ -7,6 +7,7 @@
       :categoryName="expense.category"
       :price="expense.amount + ' zł'"
       :key="expense.id"
+      @click="$emit('handleClick', expense.id)"
     />
   </div>
 </template>

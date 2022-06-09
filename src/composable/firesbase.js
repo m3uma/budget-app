@@ -12,6 +12,7 @@ import {
   orderBy,
   where,
   getDocs,
+  deleteDoc,
 } from 'firebase/firestore';
 import { auth, db } from '@/firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -37,7 +38,6 @@ onAuthStateChanged(auth, (user) => {
   const store = useFirestore();
   store.setUser(userId);
   store.getCategoriesFromDB();
-  store.getUserCategoriesFromDB();
   store.getExpensesFromDB();
 });
 ///////////////////  END AUTH functions  ///////////////////
@@ -45,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
 ///////////////////    DB functions    ///////////////////
 async function createInitialDBForUser(userId) {
   try {
-    await setDoc(doc(db, 'users', userId, 'categories', 'base'), {
+    await setDoc(doc(db, 'users', userId, 'categories', 'user'), {
       categories: [
         { name: 'groceries', color: '#FF9F40' },
         { name: 'entertainment', color: '#FF6384' },
@@ -62,37 +62,25 @@ async function createInitialDBForUser(userId) {
 }
 
 ////    CATEGORIES    ////
-async function getBaseCategories() {
-  const store = useFirestore();
-  const userId = store.user;
-  if (!userId) return [];
-  try {
-    const res = await getDoc(doc(db, 'users', userId, 'categories', 'base'));
-    return res.data().categories;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function addUserCategory(category) {
+async function addCategory(category) {
   const store = useFirestore();
   const userId = store.user;
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayUnion(category),
   });
-  store.getUserCategoriesFromDB();
+  store.getCategoriesFromDB();
 }
 
-async function deleteUserCategory(category) {
+async function deleteCategory(category) {
   const store = useFirestore();
   const userId = store.user;
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayRemove(category),
   });
-  store.getUserCategoriesFromDB();
+  store.getCategoriesFromDB();
 }
 
-async function getUserCategories() {
+async function getCategories() {
   const store = useFirestore();
   const userId = store.user;
   if (!userId) return [];
@@ -104,6 +92,8 @@ async function getUserCategories() {
   }
 }
 ////    END CATEGORIES    ////
+
+////       EXPENSES      ////
 async function addExpense({ title, date, amount, category, description = '' }) {
   const store = useFirestore();
   const userId = store.user;
@@ -119,6 +109,16 @@ async function addExpense({ title, date, amount, category, description = '' }) {
       description,
     });
     return docRef.id;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function deleteExpense(id) {
+  const store = useFirestore();
+  const userId = store.user;
+  try {
+    await deleteDoc(doc(db, 'users', userId, 'expenses', id));
   } catch (error) {
     console.error(error);
   }
@@ -141,16 +141,37 @@ async function getExpensesByDate(date) {
     return { id: doc.id, date, title, category, amount, description };
   });
 }
+
+async function updateExpense({ id, title, date, amount, category, description = '' }) {
+  const store = useFirestore();
+  const userId = store.user;
+  const date1 = dayjs(date);
+  try {
+    await setDoc(doc(db, 'users', userId, 'expenses', id), {
+      year: date1.get('year'),
+      month: date1.get('month'),
+      day: date1.get('date'),
+      title,
+      amount,
+      category,
+      description,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+////    END EXPENSES    ////
 ///////////////////  END DB functions  ///////////////////
 
 export {
   signUp,
   login,
   logout,
-  getBaseCategories,
-  getUserCategories,
-  addUserCategory,
-  deleteUserCategory,
+  getCategories,
+  addCategory,
+  deleteCategory,
   addExpense,
+  deleteExpense,
+  updateExpense,
   getExpensesByDate,
 };

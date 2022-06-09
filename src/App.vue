@@ -4,11 +4,9 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style lang="scss">
-
 body,
 html,
 #app {
@@ -21,7 +19,7 @@ html,
   display: flex;
   flex-direction: column;
   position: relative;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

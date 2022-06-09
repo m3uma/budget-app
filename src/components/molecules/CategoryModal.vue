@@ -1,7 +1,21 @@
 <script setup>
 import { ref } from 'vue';
+import { addCategory } from '@/composable/firesbase';
 
 const open = ref(false);
+
+const name = ref('');
+const color = ref('#ff85e4');
+
+const handleSubmit = async () => {
+  try {
+    await addCategory({ name: name.value, color: color.value });
+    open.value = false;
+    name.value = '';
+  } catch (e) {
+    console.error(e);
+  }
+};
 </script>
 
 <template>
@@ -13,14 +27,14 @@ const open = ref(false);
   <Teleport to="body">
     <div v-if="open" class="modal">
       <p>Add Category</p>
-      <div class="content">
-        <input placeholder="Category Name" />
-        <input type="color" class="colorpicker" />
+      <form @submit.prevent="handleSubmit" class="content">
+        <input placeholder="Category Name" v-model="name" required />
+        <input type="color" class="colorpicker" v-model="color" />
         <div class="buttons">
-          <button class="close" @click="open = false">Close</button>
-          <button class="add">Add</button>
+          <button type="button" class="close" @click="open = false">Close</button>
+          <button type="submit" class="add">Add</button>
         </div>
-      </div>
+      </form>
     </div>
   </Teleport>
 </template>
@@ -31,9 +45,7 @@ img {
 }
 
 button {
-  display: inline-block;
   display: flex;
-  flex-direction: row;
   align-self: start;
   align-items: center;
   font-size: 1rem;
@@ -41,6 +53,7 @@ button {
   cursor: pointer;
   border: none;
   background-color: transparent;
+  margin-left: 1rem;
 }
 
 p {

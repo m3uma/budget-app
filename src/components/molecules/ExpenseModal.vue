@@ -25,7 +25,12 @@ const handleAddExpense = async () => {
     category: category.value,
     description: description.value,
   });
-  store.getExpansesFromDB(dateObj);
+  store.getExpensesFromDB(dateObj);
+  title.value = '';
+  date.value = today;
+  amount.value = '';
+  category.value = 'other';
+  description.value = '';
   open.value = false;
 };
 </script>
