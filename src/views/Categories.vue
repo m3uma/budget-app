@@ -19,7 +19,8 @@
     <p>Spending summary:</p>
     <section>
       <div class="summary">
-        <div v-for="category in categories" :key="category">
+        <div v-for="category in categories" :key="category" class="summary__item">
+          <button @click="handleDelete(category)">del</button>
           <svg viewBox="0 0 10 10" :fill="category.color">
             <circle cx="50%" cy="50%" r="5" /></svg
           >{{ category.name }}
@@ -46,7 +47,6 @@ import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 
 const error = ref(null);
-const category = ref(null);
 const isLoading = ref(false);
 
 const store = useFirestore();
@@ -61,7 +61,7 @@ const handleSubmit = async () => {
   error.value = null;
   isLoading.value = true;
   try {
-    await addCategory({ name: category.value, color: '#121212' });
+    await addCategory({ name: selectedCategory.value, color: '#121212' });
   } catch (e) {
     error.value = e.message;
   } finally {
@@ -69,11 +69,11 @@ const handleSubmit = async () => {
   }
 };
 
-const handleDelete = async () => {
+const handleDelete = async (category) => {
   error.value = null;
   isLoading.value = true;
   try {
-    await deleteCategory(category.value);
+    await deleteCategory(category);
   } catch (e) {
     error.value = e.message;
   } finally {
@@ -88,11 +88,11 @@ const chartData = computed(() => ({
 }));
 </script>
 
-<style scoped>
+<style scoped lang="scss ">
 article {
   margin-top: 105px;
   flex: 1;
-  padding: 0 2rem;
+  padding: 0 2rem 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -116,6 +116,7 @@ svg {
 
 span {
   color: red;
+  margin-left: auto;
 }
 
 .chart-legend {
@@ -132,6 +133,26 @@ span {
   text-align: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0rem 2rem;
+  gap: .5rem 2rem;
+}
+
+.summary__item{
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+}
+button{
+  padding: .2em .8em;
+  color: #ff7f0a;
+  border: 2px solid #ff7f0a;
+  font-weight: bold;
+  border-radius: .2em;
+  background: transparent;
+  cursor: pointer;
+}
+button:hover{
+  color: white;
+  background: #ff7f0a;
 }
 </style>
