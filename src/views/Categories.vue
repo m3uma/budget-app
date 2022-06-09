@@ -40,7 +40,7 @@ import AddButtonVue from '@/components/atoms/AddButton.vue';
 import Header from '@/components/molecules/Header.vue';
 import ChartVue from '@/components/Chart.vue';
 import { useFirestore } from '@/stores/useFirestore';
-import { addUserCategory, deleteUserCategory } from '@/composable/firesbase';
+import { addCategory, deleteCategory } from '@/composable/firesbase';
 import ExpenseModalVue from '@/components/molecules/ExpenseModal.vue';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
@@ -61,7 +61,7 @@ const handleSubmit = async () => {
   error.value = null;
   isLoading.value = true;
   try {
-    await addUserCategory({ name: category.value, color: '#121212' });
+    await addCategory({ name: category.value, color: '#121212' });
   } catch (e) {
     error.value = e.message;
   } finally {
@@ -73,7 +73,7 @@ const handleDelete = async () => {
   error.value = null;
   isLoading.value = true;
   try {
-    await deleteUserCategory(category.value);
+    await deleteCategory(category.value);
   } catch (e) {
     error.value = e.message;
   } finally {

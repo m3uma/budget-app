@@ -38,7 +38,6 @@ onAuthStateChanged(auth, (user) => {
   const store = useFirestore();
   store.setUser(userId);
   store.getCategoriesFromDB();
-  store.getUserCategoriesFromDB();
   store.getExpensesFromDB();
 });
 ///////////////////  END AUTH functions  ///////////////////
@@ -46,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
 ///////////////////    DB functions    ///////////////////
 async function createInitialDBForUser(userId) {
   try {
-    await setDoc(doc(db, 'users', userId, 'categories', 'base'), {
+    await setDoc(doc(db, 'users', userId, 'categories', 'user'), {
       categories: [
         { name: 'groceries', color: '#FF9F40' },
         { name: 'entertainment', color: '#FF6384' },
@@ -63,37 +62,25 @@ async function createInitialDBForUser(userId) {
 }
 
 ////    CATEGORIES    ////
-async function getBaseCategories() {
-  const store = useFirestore();
-  const userId = store.user;
-  if (!userId) return [];
-  try {
-    const res = await getDoc(doc(db, 'users', userId, 'categories', 'base'));
-    return res.data().categories;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function addUserCategory(category) {
+async function addCategory(category) {
   const store = useFirestore();
   const userId = store.user;
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayUnion(category),
   });
-  store.getUserCategoriesFromDB();
+  store.getCategoriesFromDB();
 }
 
-async function deleteUserCategory(category) {
+async function deleteCategory(category) {
   const store = useFirestore();
   const userId = store.user;
   await updateDoc(doc(db, 'users', userId, 'categories', 'user'), {
     categories: arrayRemove(category),
   });
-  store.getUserCategoriesFromDB();
+  store.getCategoriesFromDB();
 }
 
-async function getUserCategories() {
+async function getCategories() {
   const store = useFirestore();
   const userId = store.user;
   if (!userId) return [];
@@ -180,10 +167,9 @@ export {
   signUp,
   login,
   logout,
-  getBaseCategories,
-  getUserCategories,
-  addUserCategory,
-  deleteUserCategory,
+  getCategories,
+  addCategory,
+  deleteCategory,
   addExpense,
   deleteExpense,
   updateExpense,
