@@ -6,9 +6,9 @@ const AUTH_PATHS = ['Categories', 'Expenses', 'NotFound'];
 const UNAUTH_PATHS = ['Login', 'SignUp'];
 
 function checkIfUserIsAuthenicated(to, _, next) {
-  const piniaFire = useFirestore();
-  if (!piniaFire.user && !UNAUTH_PATHS.includes(to.name)) return next({ name: 'Login' });
-  else if (piniaFire.user && !AUTH_PATHS.includes(to.name)) return next({ name: 'Categories' });
+  const store = useFirestore();
+  if (!store.user && !UNAUTH_PATHS.includes(to.name)) return next({ name: 'Login' });
+  else if (store.user && !AUTH_PATHS.includes(to.name)) return next({ name: 'Categories' });
   else next();
 }
 
