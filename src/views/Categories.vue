@@ -76,7 +76,7 @@ const chartData = computed(() => ({
 }));
 </script>
 
-<style scoped lang="scss ">
+<style scoped lang="scss">
 article {
   margin-top: 105px;
   flex: 1;
@@ -116,32 +116,30 @@ span {
   display: flex;
   gap: 1em;
   align-items: center;
-
 }
 
 .summary {
   text-align: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: .5rem 2rem;
+  gap: 0.5rem 2rem;
 }
 
-.summary__item{
+.summary__item {
   display: flex;
   align-items: center;
   gap: 1em;
-
 }
-button{
-  padding: .2em .8em;
+button {
+  padding: 0.2em 0.8em;
   color: #ff7f0a;
   border: 2px solid #ff7f0a;
   font-weight: bold;
-  border-radius: .2em;
+  border-radius: 0.2em;
   background: transparent;
   cursor: pointer;
 }
-button:hover{
+button:hover {
   color: white;
   background: #ff7f0a;
 }
@@ -161,14 +159,14 @@ button:hover{
     gap: 0.5rem 0.5rem;
     margin-bottom: 55px;
   }
-  .summary__item{
+  .summary__item {
     gap: 0.5rem;
   }
   .chart {
     width: 250px;
   }
   .categories {
-    flex-direction:column
+    flex-direction: column;
   }
 }
 @media (max-width: 500px) {
