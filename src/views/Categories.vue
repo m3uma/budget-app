@@ -165,12 +165,8 @@ button:hover {
     width: 250px;
   }
   .categories {
-<<<<<<< HEAD
     flex-direction: column;
-=======
-    flex-direction:column;
     margin-bottom: 120px;
->>>>>>> bm_dev
   }
 }
 @media (max-width: 500px) {

@@ -25,6 +25,25 @@ html,
   text-align: center;
   color: #2c3e50;
 }
+.modal {
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50;
+
+  @media (max-width: 500px) {
+    inset: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: column;
+    .content {
+      margin: auto;
+    }
+  }
+}
+input[type='date'] {
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50;
+}
 
 .wrapper {
   display: flex;

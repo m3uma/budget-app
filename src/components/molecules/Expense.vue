@@ -24,7 +24,7 @@ const props = defineProps(['expenseName', 'categoryName', 'price']);
   max-width: 350px;
   width: 100%;
   margin-bottom: 0.5rem;
-
+  cursor: pointer;
   color: #64615f;
   > div {
     display: flex;
